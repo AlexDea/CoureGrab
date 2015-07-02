@@ -1,0 +1,3 @@
+devblock_course_grab_homepage:
+    path:     /
+    defaults: { _controller: DevblockCourseGrabBundle:Default:index }

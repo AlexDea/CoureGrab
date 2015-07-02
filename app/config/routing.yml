@@ -1,0 +1,7 @@
+devblock_course_grab:
+    resource: "@DevblockCourseGrabBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
