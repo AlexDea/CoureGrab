@@ -1,3 +1,7 @@
 devblock_course_grab_homepage:
     path:     /
     defaults: { _controller: DevblockCourseGrabBundle:Default:index }
+    
+devblock_course_grab_test:
+    path:     /test
+    defaults: { _controller: DevblockCourseGrabBundle:Test:index }
