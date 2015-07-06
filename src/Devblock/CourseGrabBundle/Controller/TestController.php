@@ -12,12 +12,16 @@ class TestController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         
-        $scrapper = new EllucianScrapper($em);
+        $scrapper = new EllucianScrapper($em, 'Georgia State University');
         $semesters = $scrapper->fetchSemesters('https://www.gosolar.gsu.edu/bprod/bwckschd.p_disp_dyn_sched');
         $courses = $scrapper->fetchCourses('https://www.gosolar.gsu.edu/bprod/bwckschd.p_get_crse_unsec', $semesters);
         
-        var_dump($courses);
+        foreach ($courses as $course) {
+            $em->persist($course);
+        }
         
-        return new Response();
+        $em->flush();
+        
+        return new Response('<h1>Scrapped '. count($courses) .' courses.</h1>');
     }
 }

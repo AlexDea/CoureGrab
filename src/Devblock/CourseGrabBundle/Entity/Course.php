@@ -20,116 +20,123 @@ class Course
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @var string
+     * 
+     * @ORM\Column(name="school", type="string", nullable=true)
+     */
+    private $school;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="semester", type="string", length=10)
+     * @ORM\Column(name="semester", type="string", length=10, nullable=true)
      */
     private $semester;
 
     /**
-     * @var integer
+     * @var \DateTime
      *
-     * @ORM\Column(name="year", type="integer")
+     * @ORM\Column(name="year", type="datetime", nullable=true)
      */
     private $year;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="location", type="string", length=255)
+     * @ORM\Column(name="location", type="string", length=255, nullable=true)
      */
     private $location;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="instructor", type="string", length=255)
+     * @ORM\Column(name="instructor", type="string", length=255, nullable=true)
      */
     private $instructor;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="days", type="string", length=7)
+     * @ORM\Column(name="days", type="string", length=7, nullable=true)
      */
     private $days;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="subject", type="string", length=4)
+     * @ORM\Column(name="subject", type="string", length=4, nullable=true)
      */
     private $subject;
     
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="subjectNumber", type="smallint")
+     * @ORM\Column(name="subjectNumber", type="string", length=4, nullable=true)
      */
     private $subjectNumber;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="courseNumber", type="smallint")
+     * @ORM\Column(name="courseNumber", type="string", length=8, nullable=true)
      */
     private $courseNumber;
     
     /**
      * @var string
      * 
-     * @ORM\Column(name="section", type="smallint")
+     * @ORM\Column(name="section", type="string", length=3, nullable=true)
      */
     private $section;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="credits", type="smallint")
+     * @ORM\Column(name="credits", type="smallint", nullable=true)
      */
     private $credits;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=100)
+     * @ORM\Column(name="title", type="string", length=100, nullable=true)
      */
     private $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="campus", type="string", length=20)
+     * @ORM\Column(name="campus", type="string", length=20, nullable=true)
      */
     private $campus;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="startTime", type="datetime")
+     * @ORM\Column(name="startTime", type="datetime", nullable=true)
      */
     private $startTime;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="endTime", type="datetime")
+     * @ORM\Column(name="endTime", type="datetime", nullable=true)
      */
     private $endTime;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="capacity", type="smallint")
+     * @ORM\Column(name="capacity", type="smallint", nullable=true)
      */
     private $capacity;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="attending", type="smallint")
+     * @ORM\Column(name="attending", type="smallint", nullable=true)
      */
     private $attending;
 
@@ -143,6 +150,27 @@ class Course
         return $this->id;
     }
 
+    /**
+     * Get school's name
+     * 
+     * @return string
+     */
+    public function getSchool() {
+        return $this->school;
+    }
+
+    /**
+     * Sets school's name
+     * 
+     * @param string $school
+     * @return Course
+     */
+    public function setSchool($school) {
+        $this->school = $school;
+        return $this;
+    }
+
+        
     /**
      * Set semester
      *
@@ -169,7 +197,7 @@ class Course
     /**
      * Set year
      *
-     * @param integer $year
+     * @param \DateTime $year
      * @return Course
      */
     public function setYear($year)
@@ -182,7 +210,7 @@ class Course
     /**
      * Get year
      *
-     * @return integer 
+     * @return \DateTime 
      */
     public function getYear()
     {
@@ -284,7 +312,7 @@ class Course
     /**
      * Get subject number
      * 
-     * @return int
+     * @return string
      */
     public function getSubjectNumber() {
         return $this->subjectNumber;
@@ -293,7 +321,7 @@ class Course
     /**
      * Sets subject number
      * 
-     * @param int $subjectNumber
+     * @param string $subjectNumber
      * @return Course
      */
     public function setSubjectNumber($subjectNumber) {
@@ -306,7 +334,7 @@ class Course
     /**
      * Set courseNumber
      *
-     * @param int $courseNumber
+     * @param string $courseNumber
      * @return Course
      */
     public function setCourseNumber($courseNumber)
@@ -319,7 +347,7 @@ class Course
     /**
      * Get courseNumber
      *
-     * @return int
+     * @return string
      */
     public function getCourseNumber()
     {
@@ -329,7 +357,7 @@ class Course
     /**
      * Get section number
      * 
-     * @return int
+     * @return string
      */
     public function getSection() {
         return $this->section;
@@ -338,7 +366,7 @@ class Course
     /**
      * Sets section number
      * 
-     * @param int $section
+     * @param string $section
      * @return Course
      */
     public function setSection($section) {
