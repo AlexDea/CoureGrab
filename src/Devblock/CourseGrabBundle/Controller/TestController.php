@@ -14,9 +14,10 @@ class TestController extends Controller
         
         $scrapper = new EllucianScrapper($em);
         $semesters = $scrapper->fetchSemesters('https://www.gosolar.gsu.edu/bprod/bwckschd.p_disp_dyn_sched');
-        $html = $scrapper->fetchCourses('https://www.gosolar.gsu.edu/bprod/bwckschd.p_get_crse_unsec', $semesters);
+        $courses = $scrapper->fetchCourses('https://www.gosolar.gsu.edu/bprod/bwckschd.p_get_crse_unsec', $semesters);
         
-        var_dump($html);
+        var_dump($courses);
+        
         return new Response();
     }
 }

@@ -62,13 +62,27 @@ class Course
      * @ORM\Column(name="subject", type="string", length=4)
      */
     private $subject;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="subjectNumber", type="smallint")
+     */
+    private $subjectNumber;
 
     /**
-     * @var string
+     * @var int
      *
      * @ORM\Column(name="courseNumber", type="smallint")
      */
     private $courseNumber;
+    
+    /**
+     * @var string
+     * 
+     * @ORM\Column(name="section", type="smallint")
+     */
+    private $section;
 
     /**
      * @var integer
@@ -118,14 +132,6 @@ class Course
      * @ORM\Column(name="attending", type="smallint")
      */
     private $attending;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="remaining", type="smallint")
-     */
-    private $remaining;
-
 
     /**
      * Get id
@@ -276,9 +282,31 @@ class Course
     }
 
     /**
+     * Get subject number
+     * 
+     * @return int
+     */
+    public function getSubjectNumber() {
+        return $this->subjectNumber;
+    }
+
+    /**
+     * Sets subject number
+     * 
+     * @param int $subjectNumber
+     * @return Course
+     */
+    public function setSubjectNumber($subjectNumber) {
+        $this->subjectNumber = $subjectNumber;
+        
+        return $this;
+    }
+
+        
+    /**
      * Set courseNumber
      *
-     * @param string $courseNumber
+     * @param int $courseNumber
      * @return Course
      */
     public function setCourseNumber($courseNumber)
@@ -291,11 +319,32 @@ class Course
     /**
      * Get courseNumber
      *
-     * @return string 
+     * @return int
      */
     public function getCourseNumber()
     {
         return $this->courseNumber;
+    }
+
+    /**
+     * Get section number
+     * 
+     * @return int
+     */
+    public function getSection() {
+        return $this->section;
+    }
+
+    /**
+     * Sets section number
+     * 
+     * @param int $section
+     * @return Course
+     */
+    public function setSection($section) {
+        $this->section = $section;
+        
+        return $this;
     }
 
     /**
@@ -457,29 +506,6 @@ class Course
     public function getAttending()
     {
         return $this->attending;
-    }
-
-    /**
-     * Set remaining
-     *
-     * @param integer $remaining
-     * @return Course
-     */
-    public function setRemaining($remaining)
-    {
-        $this->remaining = $remaining;
-
-        return $this;
-    }
-
-    /**
-     * Get remaining
-     *
-     * @return integer 
-     */
-    public function getRemaining()
-    {
-        return $this->remaining;
     }
 
 }
