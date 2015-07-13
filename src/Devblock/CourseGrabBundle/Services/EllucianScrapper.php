@@ -25,7 +25,8 @@ class EllucianScrapper {
     protected $output;
 
     //starting at 0
-    const COURSE_TABLE_KEYS = array(
+    //Note: 5.5 and below doesn't support arrays in constants.....so just use a static...
+    public static $COURSE_TABLE_KEYS = array(
         2 => 'course_number',
         3 => 'subject',
         4 => 'subject_number',
@@ -144,7 +145,7 @@ class EllucianScrapper {
 
         $i = 0;
         foreach ($columns as $col) {
-            $tableKeys = self::COURSE_TABLE_KEYS;
+            $tableKeys = self::$COURSE_TABLE_KEYS;
             if (array_key_exists($i, $tableKeys)) {
                 $text = trim($col->nodeValue);
                 switch ($tableKeys[$i]) {
