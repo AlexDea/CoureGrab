@@ -26,4 +26,5 @@ class CourseRepository extends EntityRepository {
 
         return $query->getQuery()->getOneOrNullResult();
     }
+   
 }

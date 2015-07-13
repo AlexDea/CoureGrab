@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Devblock\CourseGrabBundle\Entity\Repository\CourseRepository")
  */
-class Course
-{
+class Course implements \JsonSerializable {
+
     /**
      * @var integer
      *
@@ -20,7 +20,7 @@ class Course
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @var string
      * 
@@ -62,14 +62,14 @@ class Course
      * @ORM\Column(name="days", type="string", length=7, nullable=true)
      */
     private $days;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="subject", type="string", length=4, nullable=true)
      */
     private $subject;
-    
+
     /**
      * @var string
      *
@@ -83,7 +83,7 @@ class Course
      * @ORM\Column(name="courseNumber", type="string", length=8, nullable=true)
      */
     private $courseNumber;
-    
+
     /**
      * @var string
      * 
@@ -140,13 +140,36 @@ class Course
      */
     private $attending;
 
+    public function jsonSerialize() {
+        //format dateimte to ISO for angular to understand
+        return array(
+            'id'        => $this->getId(),
+            'school'    => $this->getSchool(),
+            'semester'  => $this->getSemester(),
+            'year'      => $this->getYear()->format(\DateTime::ISO8601),
+            'location'  => $this->getLocation(),
+            'instructor'=> $this->getInstructor(),
+            'days'      => $this->getDays(),
+            'subject'   => $this->getSubject(),
+            'subjectNumber' => $this->getSubjectNumber(),
+            'courseNumber'  => $this->getCourseNumber(),
+            'section'   => $this->getSection(),
+            'credits'   => $this->getCredits(),
+            'title'     => $this->getTitle(),
+            'campus'    => $this->getCampus(),
+            'startTime' => $this->getStartTime()->format(\DateTime::ISO8601),
+            'endTime'   => $this->getEndTime()->format(\DateTime::ISO8601),
+            'capacity'  => $this->getCapacity(),
+            'attending' => $this->getAttending(),
+        );
+    }
+
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -170,15 +193,13 @@ class Course
         return $this;
     }
 
-        
     /**
      * Set semester
      *
      * @param string $semester
      * @return Course
      */
-    public function setSemester($semester)
-    {
+    public function setSemester($semester) {
         $this->semester = $semester;
 
         return $this;
@@ -189,8 +210,7 @@ class Course
      *
      * @return string 
      */
-    public function getSemester()
-    {
+    public function getSemester() {
         return $this->semester;
     }
 
@@ -200,8 +220,7 @@ class Course
      * @param \DateTime $year
      * @return Course
      */
-    public function setYear($year)
-    {
+    public function setYear($year) {
         $this->year = $year;
 
         return $this;
@@ -212,8 +231,7 @@ class Course
      *
      * @return \DateTime 
      */
-    public function getYear()
-    {
+    public function getYear() {
         return $this->year;
     }
 
@@ -223,8 +241,7 @@ class Course
      * @param string $location
      * @return Course
      */
-    public function setLocation($location)
-    {
+    public function setLocation($location) {
         $this->location = $location;
 
         return $this;
@@ -235,8 +252,7 @@ class Course
      *
      * @return string 
      */
-    public function getLocation()
-    {
+    public function getLocation() {
         return $this->location;
     }
 
@@ -246,8 +262,7 @@ class Course
      * @param string $instructor
      * @return Course
      */
-    public function setInstructor($instructor)
-    {
+    public function setInstructor($instructor) {
         $this->instructor = $instructor;
 
         return $this;
@@ -258,8 +273,7 @@ class Course
      *
      * @return string 
      */
-    public function getInstructor()
-    {
+    public function getInstructor() {
         return $this->instructor;
     }
 
@@ -269,8 +283,7 @@ class Course
      * @param string $days
      * @return Course
      */
-    public function setDays($days)
-    {
+    public function setDays($days) {
         $this->days = $days;
 
         return $this;
@@ -281,19 +294,17 @@ class Course
      *
      * @return string 
      */
-    public function getDays()
-    {
+    public function getDays() {
         return $this->days;
     }
-    
+
     /**
      * Set subject
      *
      * @param string $subject
      * @return Course
      */
-    public function setSubject($subject)
-    {
+    public function setSubject($subject) {
         $this->subject = $subject;
 
         return $this;
@@ -304,8 +315,7 @@ class Course
      *
      * @return string 
      */
-    public function getSubject()
-    {
+    public function getSubject() {
         return $this->subject;
     }
 
@@ -326,19 +336,17 @@ class Course
      */
     public function setSubjectNumber($subjectNumber) {
         $this->subjectNumber = $subjectNumber;
-        
+
         return $this;
     }
 
-        
     /**
      * Set courseNumber
      *
      * @param string $courseNumber
      * @return Course
      */
-    public function setCourseNumber($courseNumber)
-    {
+    public function setCourseNumber($courseNumber) {
         $this->courseNumber = $courseNumber;
 
         return $this;
@@ -349,8 +357,7 @@ class Course
      *
      * @return string
      */
-    public function getCourseNumber()
-    {
+    public function getCourseNumber() {
         return $this->courseNumber;
     }
 
@@ -371,7 +378,7 @@ class Course
      */
     public function setSection($section) {
         $this->section = $section;
-        
+
         return $this;
     }
 
@@ -381,8 +388,7 @@ class Course
      * @param integer $credits
      * @return Course
      */
-    public function setCredits($credits)
-    {
+    public function setCredits($credits) {
         $this->credits = $credits;
 
         return $this;
@@ -393,8 +399,7 @@ class Course
      *
      * @return integer 
      */
-    public function getCredits()
-    {
+    public function getCredits() {
         return $this->credits;
     }
 
@@ -404,8 +409,7 @@ class Course
      * @param string $title
      * @return Course
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -416,8 +420,7 @@ class Course
      *
      * @return string 
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -427,8 +430,7 @@ class Course
      * @param string $campus
      * @return Course
      */
-    public function setCampus($campus)
-    {
+    public function setCampus($campus) {
         $this->campus = $campus;
 
         return $this;
@@ -439,8 +441,7 @@ class Course
      *
      * @return string 
      */
-    public function getCampus()
-    {
+    public function getCampus() {
         return $this->campus;
     }
 
@@ -450,8 +451,7 @@ class Course
      * @param \DateTime $startTime
      * @return Course
      */
-    public function setStartTime($startTime)
-    {
+    public function setStartTime($startTime) {
         $this->startTime = $startTime;
 
         return $this;
@@ -462,8 +462,7 @@ class Course
      *
      * @return \DateTime 
      */
-    public function getStartTime()
-    {
+    public function getStartTime() {
         return $this->startTime;
     }
 
@@ -473,8 +472,7 @@ class Course
      * @param \DateTime $endTime
      * @return Course
      */
-    public function setEndTime($endTime)
-    {
+    public function setEndTime($endTime) {
         $this->endTime = $endTime;
 
         return $this;
@@ -485,8 +483,7 @@ class Course
      *
      * @return \DateTime 
      */
-    public function getEndTime()
-    {
+    public function getEndTime() {
         return $this->endTime;
     }
 
@@ -496,8 +493,7 @@ class Course
      * @param integer $capacity
      * @return Course
      */
-    public function setCapacity($capacity)
-    {
+    public function setCapacity($capacity) {
         $this->capacity = $capacity;
 
         return $this;
@@ -508,8 +504,7 @@ class Course
      *
      * @return integer 
      */
-    public function getCapacity()
-    {
+    public function getCapacity() {
         return $this->capacity;
     }
 
@@ -519,8 +514,7 @@ class Course
      * @param integer $attending
      * @return Course
      */
-    public function setAttending($attending)
-    {
+    public function setAttending($attending) {
         $this->attending = $attending;
 
         return $this;
@@ -531,8 +525,7 @@ class Course
      *
      * @return integer 
      */
-    public function getAttending()
-    {
+    public function getAttending() {
         return $this->attending;
     }
 

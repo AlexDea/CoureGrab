@@ -5,3 +5,10 @@ devblock_course_grab_homepage:
 devblock_course_grab_test:
     path:     /test
     defaults: { _controller: DevblockCourseGrabBundle:Test:index }
+
+devblock_course_grab_api_post_course:
+    path: /api/post/courses
+    defaults: { _controller: DevblockCourseGrabBundle:Api:postCourses }
+    requirements:
+        _format: json
+        methods:  POST
