@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityManager;
 use Goutte\Client;
 use GuzzleHttp\Client as GuzzleClient;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Output\NullOutput;
 use Devblock\CourseGrabBundle\Entity\Course;
 
 class EllucianScrapper {
@@ -18,6 +20,9 @@ class EllucianScrapper {
 
     /** @var $school string */
     protected $school;
+    
+    /** @var $output OutputInterface */
+    protected $output;
 
     //starting at 0
     const COURSE_TABLE_KEYS = array(
@@ -37,9 +42,12 @@ class EllucianScrapper {
     );
     const COURSE_TABLE_COLUMNS = 21;
 
-    public function __construct(EntityManager $em, $school) {
+    public function __construct(EntityManager $em, $school, OutputInterface $output = null) {
         $this->em = $em;
         $this->school = $school;
+        $this->output = $output;
+        if ($this->output == null) { $this->output = new NullOutput(); }
+        
         $this->client = new Client();
         //Accept all ssl no matter what
         $this->client->setClient(new GuzzleClient([ 'verify' => false]));
@@ -92,21 +100,22 @@ class EllucianScrapper {
                 'end_mi'        => '0',
                 'end_ap'        => 'a',
             );
-
+        
             $crawler = new Crawler($this->getPostPage($url, $params));
+            $courseTable = $crawler->filter('.datadisplaytable')->first();
+            unset($crawler); //try and reduce memory use
 
-            $tempCourses = $this->parseCourses($crawler, $semester);
-
+            $tempCourses = $this->parseCourses($courseTable, $semester);
+           
             $courses = array_merge($courses, $tempCourses);
+            
         }
 
         return $courses;
     }
 
-    public function parseCourses(Crawler $crawler, $semester) {
-        $courseTable = $crawler->filter('.datadisplaytable')->first();
-
-        $courses = $courseTable->filter('tr')->each(function(Crawler $node, $i) use($semester) {
+    public function parseCourses(Crawler $crawler, $semester) { 
+        $courses = $crawler->filter('tr')->each(function(Crawler $node, $i) use($semester) {
             //var_dump($node);
             $course = null;
 
@@ -115,10 +124,10 @@ class EllucianScrapper {
             if ($count == self::COURSE_TABLE_COLUMNS) {
                 $course = $this->createCourseFromRow($columns, $semester);
             }
-
+            
             return $course;
         });
-
+       
         //remove any null values
         return array_filter($courses);
     }
