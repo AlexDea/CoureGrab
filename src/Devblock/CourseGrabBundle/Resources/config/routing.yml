@@ -12,3 +12,10 @@ devblock_course_grab_api_post_course:
     requirements:
         _format: json
         methods:  POST
+        
+devblock_course_grab_api_post_filters:
+    path: /api/post/filters
+    defaults: { _controller: DevblockCourseGrabBundle:Api:postFilters }
+    requirements:
+        _format: json
+        methods:  POST   

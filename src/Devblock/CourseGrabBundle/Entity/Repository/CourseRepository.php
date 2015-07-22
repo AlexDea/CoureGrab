@@ -3,13 +3,14 @@
 namespace Devblock\CourseGrabBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * CourseRepository
  *
  */
 class CourseRepository extends EntityRepository {
-    
+
     /**
      * Finds courses from school and crn
      * 
@@ -26,5 +27,143 @@ class CourseRepository extends EntityRepository {
 
         return $query->getQuery()->getOneOrNullResult();
     }
-   
+
+    public function findSchools() {
+        $query = $this->createQueryBuilder('c')
+                ->select('DISTINCT c.school');
+        $results = $query->getQuery()->getResult();
+        $newResults = array();
+        foreach ($results as $result) {
+            array_push($newResults, $result['school']);
+        }
+
+        return $newResults;
+    }
+
+    public function applyFilters(QueryBuilder $builder, $filters) {
+        foreach ($filters as $key => $value) {
+            $builder->andWhere('c' . $key . ' =  :' . $key)
+                    ->setParameter($key, $value);
+        }
+        return $builder;
+    }
+
+    public function findByFilters($column, $filters) {
+        $query = $this->createQueryBuilder('c')
+                ->select('DISTINCT c.' . $column)
+                ->orderBy('c.' . $column);
+        $query = $this->applyFilters($query, $filters);
+
+        $results = $query->getQuery()->getResult();
+
+        return $results;
+    }
+
+    public function presentDataInSelectFormat($results, $column) {
+        $newResults = array();
+        foreach ($results as $result) {
+            $a = array(
+                'name' => $result[$column],
+                'value' => $result[$column],
+            );
+            array_push($newResults, $a);
+        }
+        return $newResults;
+    }
+
+    public function findSchoolsByFilters($filters) {
+        $column = 'school';
+        $results = $this->presentDataInSelectFormat(
+                $this->findByFilters($column, $filters), $column);
+        return $results;
+    }
+
+    public function findSubjectsByFilters($filters) {
+        $column = 'subject';
+        $results = $this->presentDataInSelectFormat(
+                $this->findByFilters($column, $filters), $column);
+        return $results;
+    }
+
+    public function findSemestersByFilters($filters) {
+        $column = 'semester';
+        $results = $this->presentDataInSelectFormat(
+                $this->findByFilters($column, $filters), $column);
+        return $results;
+    }
+
+    public function findYearsByFilters($filters) {
+        $column = 'year';
+        $years = $this->findByFilters($column, $filters);
+        $newYears = array();
+        foreach ($years as $year) {
+            $arr = array('year' => $year['year']->format(\DateTime::ISO8601));
+            array_push($newYears, $arr);
+        }
+        return $this->presentDataInSelectFormat($newYears, $column);
+    }
+
+    public function findLocationsByFilters($filters) {
+        $column = 'location';
+        $results = $this->presentDataInSelectFormat(
+                $this->findByFilters($column, $filters), $column);
+        return $results;
+    }
+
+    public function findInstructorsByFilters($filters) {
+        $column = 'instructor';
+        $results = $this->presentDataInSelectFormat(
+                $this->findByFilters($column, $filters), $column);
+        return $results;
+    }
+
+    public function findSubjectNumbersByFilters($filters) {
+        $column = 'subjectNumber';
+        $results = $this->presentDataInSelectFormat(
+                $this->findByFilters($column, $filters), $column);
+        return $results;
+    }
+
+    public function findCourseNumbersByFilters($filters) {
+        $column = 'courseNumber';
+        $results = $this->presentDataInSelectFormat(
+                $this->findByFilters($column, $filters), $column);
+        return $results;
+    }
+
+    public function findSectionsByFilters($filters) {
+        $column = 'section';
+        $results = $this->presentDataInSelectFormat(
+                $this->findByFilters($column, $filters), $column);
+        return $results;
+    }
+
+    public function findCreditsByFilters($filters) {
+        $column = 'credits';
+        $results = $this->presentDataInSelectFormat(
+                $this->findByFilters($column, $filters), $column);
+        return $results;
+    }
+
+    public function findCampusesByFilters($filters) {
+        $column = 'campus';
+        $results = $this->presentDataInSelectFormat(
+                $this->findByFilters($column, $filters), $column);
+        return $results;
+    }
+
+    public function findStartTimesByFilters($filters) {
+        $column = 'startTime';
+        $results = $this->presentDataInSelectFormat(
+                $this->findByFilters($column, $filters), $column);
+        return $results;
+    }
+
+    public function findEndTimesByFilters($filters) {
+        $column = 'endTime';
+        $results = $this->presentDataInSelectFormat(
+                $this->findByFilters($column, $filters), $column);
+        return $results;
+    }
+
 }
