@@ -16,8 +16,8 @@ courseGrab.service('courseApi', ['$http', function ($http) {
             });
         };
 
-        this.fetchFilters = function (callback) {
-            $http.post('api/post/filters').success(function (data) {
+        this.fetchFilters = function (query, callback) {
+            $http.post('api/post/filters', query).success(function (data) {
                 callback(data);
             }).error(function (data, status, headers, config) {
                 console.log('error', config);

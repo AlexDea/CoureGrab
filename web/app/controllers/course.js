@@ -11,10 +11,17 @@ courseGrab.controller('courseController', ['$scope', '$window', '$routeParams',
             links: []
         };
 
-        courseApi.fetchFilters(function (response) {
-            $scope.filters = response;
-            console.log($scope.filters);
-        });
+        $scope.fetchFilters = function() {
+            courseApi.fetchFilters($scope.courseSearch, function (response) {
+                $scope.filters = response;
+                console.log($scope.filters);
+            });
+        };
+
+        $scope.resetSearch = function() {
+            $scope.courseSearch = [];
+            $scope.fetchFilters();
+        };
 
         $scope.searchCourses = function (resetPage) {
             if (resetPage) {
@@ -86,7 +93,8 @@ courseGrab.controller('courseController', ['$scope', '$window', '$routeParams',
 
             return input;
         }
-
+        
+        $scope.fetchFilters();
         //inital the page with courses
         $scope.searchCourses();
     }]);

@@ -8,7 +8,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="school">School:</label>
-                        <select class="form-control" ng-model="courseSearch.school" name="school" 
+                        <select class="form-control" ng-change="fetchFilters()" ng-model="courseSearch.school" name="school" 
                                 ng-options="school.value as school.name for school in filters.schools">
                             <option value="" selected>Select a school</option>
                         </select>
@@ -17,7 +17,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="location">Location:</label>
-                        <select class="form-control" ng-model="courseSearch.location" name="location"
+                        <select class="form-control" ng-change="fetchFilters()" ng-model="courseSearch.location" name="location"
                                 ng-options="location.value as location.name for location in filters.locations">
                             <option value="" selected>Select a location</option>
                         </select>
@@ -26,7 +26,7 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="campus">Campus:</label>
-                        <select class="form-control" ng-model="courseSearch.campus" name="campus"
+                        <select class="form-control" ng-change="fetchFilters()" ng-model="courseSearch.campus" name="campus"
                                 ng-options="campus.value as campus.name for campus in filters.campuses">
                             <option value="" selected>Select a campus</option>
                         </select>
@@ -35,7 +35,7 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="semester">Semester:</label>
-                        <select class="form-control" ng-model="courseSearch.semester" name="semester"
+                        <select class="form-control" ng-change="fetchFilters()" ng-model="courseSearch.semester" name="semester"
                                 ng-options="semester.value as semester.name for semester in filters.semesters">
                             <option value="" selected>Select a semester</option>
                         </select>
@@ -44,7 +44,7 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="year">Year:</label>
-                        <select class="form-control" ng-model="courseSearch.year" name="year"
+                        <select class="form-control" ng-change="fetchFilters()" ng-model="courseSearch.year" name="year"
                                 ng-options="year.value as year.name|date:'yyyy' for year in filters.years">
                             <option value="" selected>Select a year</option>
                         </select>
@@ -56,7 +56,7 @@
                 <div class="col-md-3">  
                     <div class="form-group">
                         <label for="courseNumber">Course Number:</label>
-                        <select class="form-control" ng-model="courseSearch.courseNumber" name="courseNumber"
+                        <select class="form-control" ng-change="fetchFilters()" ng-model="courseSearch.courseNumber" name="courseNumber"
                                 ng-options="courseNumber.value as courseNumber.name for courseNumber in filters.courseNumbers">
                         <option value="" selected>Select a CRN</option>
                         </select>
@@ -65,7 +65,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="subject">Subject:</label>
-                        <select class="form-control" ng-model="courseSearch.subject" name="subject"
+                        <select class="form-control" ng-change="fetchFilters()" ng-model="courseSearch.subject" name="subject"
                                 ng-options="subject.value as subject.name for subject in filters.subjects">
                             <option value="" selected>Select a subject</option>
                         </select>
@@ -74,7 +74,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="subjectNumber">Subject Number:</label>
-                        <select class="form-control" ng-model="courseSearch.subjectNumber" name="subjectNumber"
+                        <select class="form-control" ng-change="fetchFilters()" ng-model="courseSearch.subjectNumber" name="subjectNumber"
                                 ng-options="subjectNumber.value as subjectNumber.name for subjectNumber in filters.subjectNumbers">
                             <option value="" selected>Select a subject number</option>
                         </select>
@@ -83,7 +83,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="section">Section:</label>
-                        <select class="form-control" ng-model="courseSearch.section" name="section"
+                        <select class="form-control" ng-change="fetchFilters()" ng-model="courseSearch.section" name="section"
                                 ng-options="section.value as section.name for section in filters.sections">
                             <option value="" selected>Select a section</option>
                         </select>
@@ -95,7 +95,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="instructor">Instructor:</label>
-                        <select class="form-control" ng-model="courseSearch.instructor" name="instructor"
+                        <select class="form-control" ng-change="fetchFilters()" ng-model="courseSearch.instructor" name="instructor"
                                 ng-options="instructor.value as instructor.name for instructor in filters.instructors">
                             <option value="" selected>Select an instructor</option>
                         </select>
@@ -104,7 +104,7 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="credits">Credits:</label>
-                        <select class="form-control" ng-model="courseSearch.credits" name="credits"
+                        <select class="form-control" ng-change="fetchFilters()" ng-model="courseSearch.credits" name="credits"
                                 ng-options="credits.value as credits.name for credits in filters.credits">
                             <option value="" selected>Select credits</option>
                         </select>
@@ -114,6 +114,7 @@
 
         </div>
         <div class="panel-footer">
+            <button class="btn btn-default" ng-click="resetSearch()">Reset</button>
             <button class="btn btn-primary" ng-click="searchCourses(true)">Search</button>
         </div>
     </div>
