@@ -9,75 +9,83 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ApiController extends Controller
 {
     public function postCoursesAction(Request $request) {
+        $params = $this->getParamsFromRequest($request);
+        $limit = (int)$request->request->get('limit', 20);
+        $page = (int)$request->get('page', 1);
+        
         $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('DevblockCourseGrabBundle:Course');
         
-        $params = array(
-            'school'    => $request->get('school'),
-            'semester'  => $request->get('semester'),
-            'year'      => $request->get('year'),
-            'location'  => $request->get('location'),
-            'instructor' => $request->get('instructor'),
-            'days'      => $request->get('days'),
-            'subject'   => $request->get('subject'),
-            'subjectNumber' => $request->get('subjectNumber'),
-            'courseNumber'  => $request->get('courseNumber'),
-            'section'   => $request->get('section'),
-            'credits'   => $request->get('credits'),
-            'title'     => $request->get('title'),
-            'campus'    => $request->get('campus'),
-            'startTime' => $request->get('startTime'),
-            'endTime'   => $request->get('endTime'),
-        );
-        $params = array_filter($params); //remove any null values
+        //$total = $repo->count($params);
+        $offset = ($page - 1) * $limit;
         
-        $limit = $request->get('limit', 5);
-        $offset = $request->get('offset', 0);
-        
-        $courses = $em->getRepository('DevblockCourseGrabBundle:Course')
-                ->findBy($params, null, $limit, $offset);
-        
+        $courses = $repo->findBy($params, null, $limit, $offset);
+        //var_dump(json_encode($courses));
         return new JsonResponse($courses);
     }
     
     public function postFiltersAction(Request $request) {
-        $filters = array(
-            'school'    => $request->get('school'),
-            'semester'  => $request->get('semester'),
-            'year'      => $request->get('year'),
-            'location'  => $request->get('location'),
-            'instructor' => $request->get('instructor'),
-            'days'      => $request->get('days'),
-            'subject'   => $request->get('subject'),
-            'subjectNumber' => $request->get('subjectNumber'),
-            'courseNumber'  => $request->get('courseNumber'),
-            'section'   => $request->get('section'),
-            'credits'   => $request->get('credits'),
-            'campus'    => $request->get('campus'),
-            'startTime' => $request->get('startTime'),
-            'endTime'   => $request->get('endTime'),
-        );
-        $filters = array_filter($filters); //remove any null values
+        $filters = $this->getParamsFromRequest($request);
         
         $em = $this->getDoctrine()->getManager();
 
         $repo = $em->getRepository('DevblockCourseGrabBundle:Course');
         $selections = array(
-            'schools'   => $repo->findSchoolsByFilters($filters),
-            'subjects'  => $repo->findSubjectsByFilters($filters),
-            'semesters' => $repo->findSemestersByFilters($filters),
-            'years'     => $repo->findYearsByFilters($filters),
-            'locations' => $repo->findLocationsByFilters($filters),
+            'schools'        => $repo->findSchoolsByFilters($filters),
+            'subjects'       => $repo->findSubjectsByFilters($filters),
+            'semesters'      => $repo->findSemestersByFilters($filters),
+            'years'          => $repo->findYearsByFilters($filters),
+            'locations'      => $repo->findLocationsByFilters($filters),
             'instructors'    => $repo->findInstructorsByFilters($filters),
             'subjectNumbers' => $repo->findSubjectNumbersByFilters($filters),
             'courseNumbers'  => $repo->findCourseNumbersByFilters($filters),
-            'sections'   => $repo->findSectionsByFilters($filters),
-            'credits'    => $repo->findCreditsByFilters($filters),
-            'campuses'   => $repo->findCampusesByFilters($filters),
-            'startTimes' => $repo->findStartTimesByFilters($filters),
-            'endTimes' => $repo->findEndTimesByFilters($filters),
+            'sections'       => $repo->findSectionsByFilters($filters),
+            'credits'        => $repo->findCreditsByFilters($filters),
+            'campuses'       => $repo->findCampusesByFilters($filters),
+            'startTimes'     => $repo->findStartTimesByFilters($filters),
+            'endTimes'       => $repo->findEndTimesByFilters($filters),
         );
         
         return new JsonResponse($selections);
+    }
+    
+    public function postCountPagesAction(Request $request) {
+        $params = $this->getParamsFromRequest($request);
+        $limit = $request->request->get('limit', 20);
+        
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('DevblockCourseGrabBundle:Course');
+        
+        $total = $repo->count($params);
+        
+        $pageData = array(
+            'total' => $total,
+            'pages' => ceil($total / $limit),
+        );
+        
+        return new JsonResponse($pageData);
+    }
+    
+    public function getParamsFromRequest(Request $request) {
+         $params = array(
+            'school'        => $request->request->get('school'),
+            'semester'      => $request->request->get('semester'),
+            'year'          => $request->request->get('year'),
+            'location'      => $request->request->get('location'),
+            'instructor'    => $request->request->get('instructor'),
+            'days'          => $request->request->get('days'),
+            'subject'       => $request->request->get('subject'),
+            'subjectNumber' => $request->request->get('subjectNumber'),
+            'courseNumber'  => $request->request->get('courseNumber'),
+            'section'       => $request->request->get('section'),
+            'credits'       => $request->request->get('credits'),
+            'title'         => $request->request->get('title'),
+            'campus'        => $request->request->get('campus'),
+            'startTime'     => $request->request->get('startTime'),
+            'endTime'       => $request->request->get('endTime'),
+        );
+        //remove any null values
+        return array_filter($params);
     }
     
 }

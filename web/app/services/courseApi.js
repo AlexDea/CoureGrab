@@ -1,13 +1,15 @@
 courseGrab.service('courseApi', ['$http', function ($http) {
 
-        this.searchCourses = function (query, callback) {
-            console.log(query);
-            $http.post('api/post/courses', {
-                params: {
-                    limit: 5,
-                    offset: 0
-                }
-            }).success(function (data) {
+        this.searchCourses = function (query, page, limit, callback) {
+            var params = {
+                limit: limit,
+                page: page
+            };
+            angular.extend(params, query);
+            console.log(params);
+            
+            $http.post('api/post/courses', params)
+            .success(function (data) {
                 callback(data);
             }).error(function (data, status, headers, config) {
                 console.log('error', config);
@@ -16,6 +18,21 @@ courseGrab.service('courseApi', ['$http', function ($http) {
 
         this.fetchFilters = function (callback) {
             $http.post('api/post/filters').success(function (data) {
+                callback(data);
+            }).error(function (data, status, headers, config) {
+                console.log('error', config);
+            });
+        };
+        
+        this.getTotalPages = function (query, limit, callback) {
+            var params = {
+                limit: limit
+            };
+            angular.extend(params, query);
+            console.log(params);
+            
+            $http.post('api/post/count/pages', params)
+            .success(function (data) {
                 callback(data);
             }).error(function (data, status, headers, config) {
                 console.log('error', config);

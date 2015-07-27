@@ -9,13 +9,22 @@ devblock_course_grab_test:
 devblock_course_grab_api_post_course:
     path: /api/post/courses
     defaults: { _controller: DevblockCourseGrabBundle:Api:postCourses }
+    #methods: POST
     requirements:
         _format: json
-        methods:  POST
+        
         
 devblock_course_grab_api_post_filters:
     path: /api/post/filters
     defaults: { _controller: DevblockCourseGrabBundle:Api:postFilters }
+    methods: POST
     requirements:
         _format: json
-        methods:  POST   
+
+devblock_course_grab_api_post_count_pages:
+    path: /api/post/count/pages
+    defaults: { _controller: DevblockCourseGrabBundle:Api:postCountPages }
+    #methods: POST
+    requirements:
+        _format: json
+

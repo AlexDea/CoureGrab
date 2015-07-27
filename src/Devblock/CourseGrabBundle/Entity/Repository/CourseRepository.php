@@ -11,6 +11,21 @@ use Doctrine\ORM\QueryBuilder;
  */
 class CourseRepository extends EntityRepository {
 
+    
+    /**
+     * Counts courses
+     * 
+     * @param array $filters
+     * @return int
+     */
+    public function count($filters = array()) {
+        $query = $this->createQueryBuilder('c')
+                ->select('COUNT(c.id)');
+        $query = $this->applyFilters($query, $filters);
+        
+        return $query->getQuery()->getSingleScalarResult();
+    }
+    
     /**
      * Finds courses from school and crn
      * 
@@ -28,21 +43,9 @@ class CourseRepository extends EntityRepository {
         return $query->getQuery()->getOneOrNullResult();
     }
 
-    public function findSchools() {
-        $query = $this->createQueryBuilder('c')
-                ->select('DISTINCT c.school');
-        $results = $query->getQuery()->getResult();
-        $newResults = array();
-        foreach ($results as $result) {
-            array_push($newResults, $result['school']);
-        }
-
-        return $newResults;
-    }
-
     public function applyFilters(QueryBuilder $builder, $filters) {
         foreach ($filters as $key => $value) {
-            $builder->andWhere('c' . $key . ' =  :' . $key)
+            $builder->andWhere('c.' . $key . ' =  :' . $key)
                     ->setParameter($key, $value);
         }
         return $builder;

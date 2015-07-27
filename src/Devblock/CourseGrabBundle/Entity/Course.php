@@ -141,7 +141,7 @@ class Course implements \JsonSerializable {
     private $attending;
 
     public function jsonSerialize() {
-        //format dateimte to ISO for angular to understand
+        //format datetimes to ISO for angular to understand
         return array(
             'id'        => $this->getId(),
             'school'    => $this->getSchool(),
@@ -232,6 +232,10 @@ class Course implements \JsonSerializable {
      * @return \DateTime 
      */
     public function getYear() {
+        if ($this->year == null) {
+            //default to 0 date
+            return new \DateTime(0);
+        }
         return $this->year;
     }
 
@@ -463,6 +467,10 @@ class Course implements \JsonSerializable {
      * @return \DateTime 
      */
     public function getStartTime() {
+        if ($this->startTime == null) {
+            //default to 0 date
+            return (new \DateTime())->setTimestamp(0);
+        }
         return $this->startTime;
     }
 
@@ -474,7 +482,7 @@ class Course implements \JsonSerializable {
      */
     public function setEndTime($endTime) {
         $this->endTime = $endTime;
-
+        
         return $this;
     }
 
@@ -484,6 +492,10 @@ class Course implements \JsonSerializable {
      * @return \DateTime 
      */
     public function getEndTime() {
+        if ($this->endTime == null) {
+            //default to 0 date
+            return (new \DateTime())->setTimestamp(0);
+        }
         return $this->endTime;
     }
 

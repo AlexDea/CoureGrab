@@ -1,4 +1,7 @@
-<div ng-include="settings.viewsPath +'courseSearch.html'"></div>
+<div ng-include="settings.viewsPath + 'courseSearch.html'"></div>
+
+<a id="top"></a>
+
 <div class="row">
     <div class="col-md-4 well" ng-repeat="course in courses| orderBy: 'school'">
         <div class="row">
@@ -39,3 +42,28 @@
         </div>
     </div>
 </div>    
+
+<a class="btn btn-primary pull-right" ng-click="goToAnchor('top')">Back to Top</a>
+
+<p ng-show="pagination.pages">{{ pagination.page }} out of {{ pagination.pages }} pages</p>
+<nav ng-show="pagination.links">
+    <ul class="pagination"
+        ng-init="{prevDisable: pagination.page <= 1, 
+                    nextDisable: pagination.page >= pagination.pages}">
+        <li ng-class="{disabled: prevDisable}">
+            <a ng-click="!prevDisable || handleDisabledClick()" href="#/{{ (pagination.page - 1) }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li ng-repeat="link in pagination.links track by $index"
+            ng-init="{curDisable: pagination.page == link || link == '...'}"
+            ng-class="{disabled: curDisable}">
+            <a ng-click="!curDisable || handleDisabledClick()" href="#/{{ link }}">{{ link }}</a>
+        </li>
+        <li ng-class="{disabled: nextDisable}">
+            <a ng-click="!nextDisable || handleDisabledClick()" href="#/{{ (pagination.page + 1) }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

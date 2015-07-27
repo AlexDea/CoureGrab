@@ -2,3 +2,7 @@ services:
 #    devblock_course_grab.example:
 #        class: Devblock\CourseGrabBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+    devblock.coursegrabbundle.json_request_listener:
+        class: Devblock\CourseGrabBundle\EventListener\JSONRequestListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
