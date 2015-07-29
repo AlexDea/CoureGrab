@@ -4,11 +4,49 @@ courseGrab.controller('courseController', ['$scope', '$window', '$routeParams',
         $scope.settings = $window.settings;
         $scope.courses = [];
         $scope.filters = [];
-        $scope.courseSearch = dataPersistence.state;
+        $scope.isShowCart = false;
+        //if data persist is empty, default to an empty object.
+        $scope.courseSearch = dataPersistence.state.courseSearch || {};
+        $scope.selectedCourses = dataPersistence.state.selectedCourses || [];
+        
         $scope.pagination = {
             page:  parseInt($routeParams.page) || 1,
             limit: 20,
             links: []
+        };
+        
+        //watch and persist search state
+        $scope.$watch('courseSearch', function(value) {
+            dataPersistence.state.courseSearch = value;
+        });
+        //watch and persist search state
+        $scope.$watch('selectedCourses', function(value) {
+            dataPersistence.state.selectedCourses = value;
+        });
+
+        $scope.toggleCart = function() {
+            $scope.isShowCart = !$scope.isShowCart;
+        };
+        
+        $scope.addCourseToCart = function(course) {
+            $scope.selectedCourses.push(course);
+        };
+        
+        $scope.removeCourseFromCart = function(course) {
+            var index = $scope.selectedCourses.indexOf(course);
+            $scope.selectedCourses.splice(index, 1);  
+        };
+
+        $scope.isInCart = function(course) {
+            var selected = $scope.selectedCourses;
+            var contains = false;
+            for (var i=0; i < selected.length; i++) {
+                if (selected[i].courseNumber === course.courseNumber) {
+                        contains = true;
+                    break;
+                }
+            }
+            return contains;
         };
 
         $scope.fetchFilters = function() {
@@ -19,8 +57,8 @@ courseGrab.controller('courseController', ['$scope', '$window', '$routeParams',
         };
 
         $scope.resetSearch = function() {
-            $scope.courseSearch = [];
-            $scope.fetchFilters();
+            $scope.courseSearch = {};
+            //$scope.fetchFilters();
         };
 
         $scope.searchCourses = function (resetPage) {

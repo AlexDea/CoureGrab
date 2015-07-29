@@ -6,12 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class ApiController extends Controller
+class CourseApiController extends Controller
 {
     public function postCoursesAction(Request $request) {
         $params = $this->getParamsFromRequest($request);
-        $limit = (int)$request->request->get('limit', 20);
-        $page = (int)$request->get('page', 1);
+        $limit = $request->request->get('limit', 20);
+        $page = $request->request->get('page', 1);
         
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('DevblockCourseGrabBundle:Course');

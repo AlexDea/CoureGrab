@@ -8,23 +8,28 @@ devblock_course_grab_test:
 
 devblock_course_grab_api_post_course:
     path: /api/post/courses
-    defaults: { _controller: DevblockCourseGrabBundle:Api:postCourses }
-    #methods: POST
+    defaults: { _controller: DevblockCourseGrabBundle:CourseApi:postCourses }
+    methods: POST
     requirements:
         _format: json
-        
-        
+         
 devblock_course_grab_api_post_filters:
     path: /api/post/filters
-    defaults: { _controller: DevblockCourseGrabBundle:Api:postFilters }
+    defaults: { _controller: DevblockCourseGrabBundle:CourseApi:postFilters }
     methods: POST
     requirements:
         _format: json
 
 devblock_course_grab_api_post_count_pages:
     path: /api/post/count/pages
-    defaults: { _controller: DevblockCourseGrabBundle:Api:postCountPages }
-    #methods: POST
+    defaults: { _controller: DevblockCourseGrabBundle:CourseApi:postCountPages }
+    methods: POST
     requirements:
         _format: json
 
+devblock_course_grab_api_post_count_pages:
+    path: /api/post/notify
+    defaults: { _controller: DevblockCourseGrabBundle:NotifyApi:postNotify }
+    methods: POST
+    requirements:
+        _format: json
