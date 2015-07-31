@@ -33,8 +33,9 @@
         <div class="row">
             <div class="col-md-6">
                 <strong>Time:</strong>
-                {{ course.days}}
-                {{ course.startTime | date: 'H:mm' }}-{{ course.endTime | date: 'H:mm' }}
+                {{ course.startTime | date: 'h:mm a' }}-{{ course.endTime | date: 'h:mm a' }}
+                <br>
+                <strong>Days:</strong> {{ course.days }}
             </div>
             <div class="col-md-6"><strong>Attending:</strong> {{ course.attending }}/{{ course.capacity }}</div>
         </div>

@@ -33,7 +33,14 @@ courseGrab.controller('courseController', ['$scope', '$window', '$routeParams',
         };
         
         $scope.removeCourseFromCart = function(course) {
-            var index = $scope.selectedCourses.indexOf(course);
+            var index = -1;
+            for (var i=0; i < $scope.selectedCourses.length; i++) {
+                if ($scope.selectedCourses[i].id === course.id) {
+                    index = i;
+                    break;
+                }
+            }
+            console.log(index);
             $scope.selectedCourses.splice(index, 1);  
         };
 

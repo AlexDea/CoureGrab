@@ -1,0 +1,64 @@
+{% extends 'DevblockCourseGrabBundle:Email:base.html.twig' %}
+
+{% block title %}Welcome to CourseGrab{% endblock %}
+
+{% block inlineStyles %}
+
+{% endblock %}
+
+{% block content %}
+    <table>
+        <tr>
+            <td><h1>Welcome to CourseGrab</h1></td>
+        </tr>
+        <tr>
+            <td>You have signed up to be notified when these courses have an opening.</td>
+        </tr>
+        <tr>
+        <table>
+            {% for course in courses %}
+                <tr>
+                    <td colspan="3"><h3>{{ course.title }}</h3></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><h4>{{ course.school }}</h4></td>
+                    <td>
+                        <h3>
+                            {{ course.semester }} 
+                            {{ course.year | date('Y') }}
+                        </h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Course number:</strong> {{ course.courseNumber }}</td>
+                    <td>
+                        {{ course.subject }} 
+                        {{ course.subjectNumber }}
+                        {{ course.section }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <strong>Time:</strong>
+                        {{ course.days}}
+                        {{ course.startTime | date('h:i a') }}-{{ course.endTime | date('h:i a') }}
+                    </td>
+                    <td class="col-md-6"><strong>Attending:</strong> {{ course.attending }}/{{ course.capacity }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Campus:</strong> {{ course.campus }}</td>
+                    <td colspan="2"><strong>Location:</strong> {{ course.location }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Credits:</strong> {{ course.credits }}</td>
+                    <td colspan="2"<strong>Instructor:</strong> {{ course.instructor }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </tr>
+    <tr>
+        Thank you<br>
+        - CourseGrab Team
+    </tr>
+</table>
+{% endblock %}

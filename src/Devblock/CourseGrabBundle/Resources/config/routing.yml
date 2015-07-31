@@ -5,6 +5,10 @@ devblock_course_grab_homepage:
 devblock_course_grab_test:
     path:     /test
     defaults: { _controller: DevblockCourseGrabBundle:Test:index }
+    
+devblock_course_grab_test_email:
+    path:     /test/email
+    defaults: { _controller: DevblockCourseGrabBundle:NotifyApi:postNotify }
 
 devblock_course_grab_api_post_course:
     path: /api/post/courses
@@ -27,9 +31,9 @@ devblock_course_grab_api_post_count_pages:
     requirements:
         _format: json
 
-devblock_course_grab_api_post_count_pages:
+devblock_course_grab_api_post_notify:
     path: /api/post/notify
     defaults: { _controller: DevblockCourseGrabBundle:NotifyApi:postNotify }
-    methods: POST
+    #methods: POST
     requirements:
         _format: json

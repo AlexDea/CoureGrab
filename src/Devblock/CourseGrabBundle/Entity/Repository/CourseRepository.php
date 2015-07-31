@@ -27,6 +27,28 @@ class CourseRepository extends EntityRepository {
     }
     
     /**
+     * Takes an array of courses identified by "school" and "courseNumber"
+     * 
+     * @param array $courses
+     * @return Course[]
+     */
+    public function findByCourses($courses = array()) {
+        $ids = array();
+        $count = count($courses);
+        for ($i=0; $i < $count; $i++) {
+            if (isset($courses[$i]['id'])) {
+                $ids[] = $courses[$i]['id'];
+            }
+        }
+        $query = $this->createQueryBuilder('c')
+                ->where('c.id IN (:ids)')
+                ->setParameter('ids', $ids);
+        
+        //var_dump($query->getQuery()->getSQL());
+        return $query->getQuery()->getResult();        
+    }
+    
+    /**
      * Finds courses from school and crn
      * 
      * @param string $school

@@ -1,18 +1,32 @@
 <div ng-controller="cartController">
-    <form ng-submit="submitCart()">
+    <form name="cart" ng-submit="submitCart()">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4>Notification Cart</h4>
             </div>
             <div class="panel-body">
-                <div ng-if="isCartEmpty() && cart.submited" class="alert alert-danger">
+                <div ng-if="cart.submited && !validCart()" class="alert alert-danger">
                     Cart can not be empty!
                 </div>
+                <div ng-if="cart.submited">
+                    <div ng-if="wasSuccessful()" class="alert alert-success">
+                        You has successfully signed up to be notified as soon as an opening has appeared.
+                    </div>
+                    <div ng-if="!wasSuccessful()" class="alert alert-danger">
+                        Some server errors has occurred. Please try again.
+                        <ul>
+                            <li ng-repeat="error in cart.errors">
+                                {{ error }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
                 <div class="row">
                     <div class="col-md-3">
-                        <div class="form-group">
+                        <div class="form-group" ng-class="{'has-error': cart.email.$error.required || cart.email.$error.email}">
                             <label for="email">Email:</label>
-                            <input type="email" class="form-control" placeholder="sally@gmail.com" ng-model="cart.form.email" name="email"> 
+                            <input type="email" required="required" class="form-control" placeholder="sally@gmail.com" ng-model="cart.form.email" name="email"> 
                         </div>
                     </div>
                 </div>
