@@ -139,6 +139,13 @@ class Course implements \JsonSerializable {
      * @ORM\Column(name="attending", type="smallint", nullable=true)
      */
     private $attending;
+    
+    /**
+     * @var NotificationAssociation
+     * 
+     * @ORM\OneToMany(targetEntity="NotificationAssociation", mappedBy="course", cascade={"persist", "remove"})
+     */
+    private $notificationAssociations;
 
     public function jsonSerialize() {
         //format datetimes to ISO for angular to understand
@@ -539,6 +546,29 @@ class Course implements \JsonSerializable {
      */
     public function getAttending() {
         return $this->attending;
+    }
+    
+    /**
+     * Set notificationAssociations
+     *
+     * @param NotificationAssociation[] $notificationAssociations
+     * @return NotificationAssociation
+     */
+    public function setNotificationAssociations($notificationAssociations)
+    {
+        $this->notificationAssociations = $notificationAssociations;
+
+        return $this;
+    }
+
+    /**
+     * Get NotificationAssociation
+     *
+     * @return NotificationAssociation[] 
+     */
+    public function getNotificationAssociations()
+    {
+        return $this->notificationAssociations;
     }
 
 }
