@@ -85,7 +85,7 @@ class NotificationAssociation
      * @param \Devblock\CourseGrabBundle\Entity\Course $course
      * @return NotificationAssociation
      */
-    public function setCourse(\Devblock\CourseGrabBundle\Entity\Course $course = null)
+    public function setCourse($course = null)
     {
         $this->course = $course;
 
@@ -108,7 +108,7 @@ class NotificationAssociation
      * @param \Devblock\CourseGrabBundle\Entity\NotifyUser $notifyUser
      * @return NotificationAssociation
      */
-    public function setNotifyUser(\Devblock\CourseGrabBundle\Entity\NotifyUser $notifyUser = null)
+    public function setNotifyUser($notifyUser = null)
     {
         $this->notifyUser = $notifyUser;
 

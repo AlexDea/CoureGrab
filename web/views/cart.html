@@ -5,7 +5,7 @@
                 <h4>Notification Cart</h4>
             </div>
             <div class="panel-body">
-                <div ng-if="cart.submited && !validCart()" class="alert alert-danger">
+                <div ng-if="cart.submitting && !validCart()" class="alert alert-danger">
                     Cart can not be empty!
                 </div>
                 <div ng-if="cart.submited">

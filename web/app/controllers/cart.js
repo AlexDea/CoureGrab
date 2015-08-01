@@ -12,12 +12,16 @@ courseGrab.controller('cartController', ['$scope', '$window', '$routeParams',
         }; 
         
         $scope.resetCart = function() {
+            $scope.clearCart();
             $scope.cart.submited = false;
             $scope.cart.submitting = false;
         };
         
         $scope.submitCart = function() {
+            $scope.cart.success = false;
+            $scope.cart.submited = false;
             $scope.cart.submitting = true;
+            
             if ($scope.validCart()) {
                 var query = {
                     email: $scope.cart.form.email,
@@ -29,10 +33,10 @@ courseGrab.controller('cartController', ['$scope', '$window', '$routeParams',
                     $scope.cart.errors = data.errors;
                     $scope.cart.submitting = false;
                     $scope.cart.submited = true;
+                    $scope.clearCart();
                 });
             }
         };
-        
         $scope.validCart = function() {
             return !$scope.isCartEmpty()
                     && !angular.isUndefined($scope.cart.form.email);

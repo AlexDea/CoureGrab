@@ -43,6 +43,10 @@ courseGrab.controller('courseController', ['$scope', '$window', '$routeParams',
             console.log(index);
             $scope.selectedCourses.splice(index, 1);  
         };
+        
+        $scope.clearCart = function() {
+            $scope.selectedCourses.splice(0, $scope.selectedCourses.length);
+        };
 
         $scope.isInCart = function(course) {
             var selected = $scope.selectedCourses;
