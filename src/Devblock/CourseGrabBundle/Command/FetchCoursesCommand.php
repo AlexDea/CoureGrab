@@ -29,11 +29,11 @@ class FetchCoursesCommand extends ContainerAwareCommand
         $output->writeln('After scrapping memory: '. memory_get_peak_usage());
         
         $count = count($courses);
-        for ($i=0; $i < $count; $i++) {
+        for ($i=0; $i < $count; $i++) { 
             $em->persist($courses[$i]);
             if (fmod($i, 20) == 0 && $i != 0) {
                 $em->flush();
-                $em->clear();
+               // $em->clear();
             }
         }
         $em->flush(); //flush the final persisted courses

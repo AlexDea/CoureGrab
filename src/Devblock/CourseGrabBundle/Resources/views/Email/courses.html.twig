@@ -1,0 +1,40 @@
+<table>
+    {% for course in courses %}
+        <tr>
+            <td colspan="3"><h3>{{ course.title }}</h3></td>
+        </tr>
+        <tr>
+            <td colspan="2"><h4>{{ course.school }}</h4></td>
+            <td>
+                <h3>
+                    {{ course.semester }} 
+                    {{ course.year | date('Y') }}
+                </h3>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Course number:</strong> {{ course.courseNumber }}</td>
+            <td>
+                {{ course.subject }} 
+                {{ course.subjectNumber }}
+                {{ course.section }}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <strong>Time:</strong>
+                {{ course.days}}
+                {{ course.startTime | date('h:i a') }}-{{ course.endTime | date('h:i a') }}
+            </td>
+            <td class="col-md-6"><strong>Attending:</strong> {{ course.attending }}/{{ course.capacity }}</td>
+        </tr>
+        <tr>
+            <td><strong>Campus:</strong> {{ course.campus }}</td>
+            <td colspan="2"><strong>Location:</strong> {{ course.location }}</td>
+        </tr>
+        <tr>
+            <td><strong>Credits:</strong> {{ course.credits }}</td>
+            <td colspan="2"<strong>Instructor:</strong> {{ course.instructor }}</td>
+        </tr>
+    {% endfor %}
+</table>

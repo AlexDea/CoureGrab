@@ -154,11 +154,11 @@ class EllucianScrapper {
                          * TODO: find a better way to handle this...
                          */
                         $oldCourse = $this->em->getRepository('DevblockCourseGrabBundle:Course')
-                            ->findBySchoolAndCRN($this->school, $text);
+                           ->findBySchoolAndCRN($this->school, $text);
                         if ($oldCourse) {
                             $course = $oldCourse;
                         }
-     
+                        
                         $course->setCourseNumber($text);
                         break;
                     case 'subject':
@@ -202,20 +202,20 @@ class EllucianScrapper {
                     case 'location':
                         $course->setLocation($text);
                         break;
-
                     default:
                 }
             }
             $i++;
         }
+        if ($course) {
+            //get semester and year from semester
+            $s = explode(' ', $semester);
+            $course->setSemester($s[0]);
+            $course->setYear(\DateTime::createFromFormat('!Y', $s[1]));
 
-        //get semester and year from semester
-        $s = explode(' ', $semester);
-        $course->setSemester($s[0]);
-        $course->setYear(\DateTime::createFromFormat('!Y', $s[1]));
-
-        $course->setSchool($this->school);
-
+            $course->setSchool($this->school);
+        }
+        
         return $course;
     }
 
