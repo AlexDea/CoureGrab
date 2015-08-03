@@ -23,7 +23,7 @@ class FetchCoursesCommand extends ContainerAwareCommand
         $output->writeln('Fetching courses...');
         $output->writeln('Before memory: '. memory_get_peak_usage());
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $scrapper = new EllucianScrapper($em, 'Georgia State University', $output);
+        $scrapper = new EllucianScrapper($em, 'Georgia State University', $this->getApplication()->getKernel()->getContainer()->get('event_dispatcher'), $output);
         $semesters = $scrapper->fetchSemesters('https://www.gosolar.gsu.edu/bprod/bwckschd.p_disp_dyn_sched');
         $courses = $scrapper->fetchCourses('https://www.gosolar.gsu.edu/bprod/bwckschd.p_get_crse_unsec', $semesters);
         $output->writeln('After scrapping memory: '. memory_get_peak_usage());

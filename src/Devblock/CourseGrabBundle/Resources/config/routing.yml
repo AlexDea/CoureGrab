@@ -13,7 +13,7 @@ devblock_course_grab_test_email:
 devblock_course_grab_api_post_course:
     path: /api/post/courses
     defaults: { _controller: DevblockCourseGrabBundle:CourseApi:postCourses }
-    #methods: POST
+    methods: POST
     requirements:
         _format: json
          

@@ -12,4 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class NotificationAssociationRepository extends EntityRepository
 {
+    /*public function findByCourse($course) {
+        $query = $this->createQueryBuilder('n')
+                ->where('n.courseId = :courseId')
+                ->setParameter('courseId', $course->getId());
+        
+        return $query->getQuery()->getResult();
+    }*/
 }

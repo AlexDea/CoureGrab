@@ -9,6 +9,7 @@ use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\NullOutput;
 use Devblock\CourseGrabBundle\Entity\Course;
+use Devblock\CourseGrabBundle\Event\CourseCapacityChange;
 
 class EllucianScrapper {
 
@@ -23,6 +24,9 @@ class EllucianScrapper {
     
     /** @var $output OutputInterface */
     protected $output;
+    
+    /** @var $eventDispatcher EventDispatcher */
+    protected $eventDispatcher;
 
     //starting at 0
     //Note: 5.5 and below doesn't support arrays in constants.....so just use a static...
@@ -43,11 +47,12 @@ class EllucianScrapper {
     );
     const COURSE_TABLE_COLUMNS = 21;
 
-    public function __construct(EntityManager $em, $school, OutputInterface $output = null) {
+    public function __construct(EntityManager $em, $school, $eventDispatcher, OutputInterface $output = null) {
         $this->em = $em;
         $this->school = $school;
         $this->output = $output;
         if ($this->output == null) { $this->output = new NullOutput(); }
+        $this->eventDispatcher = $eventDispatcher;
         
         $this->client = new Client();
         //Accept all ssl no matter what
@@ -142,6 +147,8 @@ class EllucianScrapper {
      */
     public function createCourseFromRow(Crawler $columns, $semester) {
         $course = new Course();
+        $originalCapacity = 0;
+        $originalAttending = 0;
 
         $i = 0;
         foreach ($columns as $col) {
@@ -191,9 +198,11 @@ class EllucianScrapper {
                         }
                         break;
                     case 'capacity':
+                        $originalCapacity = $course->getCapacity();
                         $course->setCapacity((int) $text);
                         break;
                     case 'attending':
+                        $originalAttending = $course->getAttending();
                         $course->setAttending((int) $text);
                         break;
                     case 'instructor':
@@ -208,6 +217,12 @@ class EllucianScrapper {
             $i++;
         }
         if ($course) {
+            //if previously we had no space, but now we do, fire the course capacioty change
+            if (($originalCapacity - $originalAttending) <= 0 && ($course->getCapacity() - $course->getAttending()) > 0) {
+                $event = new CourseCapacityChange($course);
+                $this->eventDispatcher->dispatch('course.capacity.changed', $event);
+            }
+            
             //get semester and year from semester
             $s = explode(' ', $semester);
             $course->setSemester($s[0]);

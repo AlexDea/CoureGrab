@@ -26,7 +26,10 @@
                 {{ course.days}}
                 {{ course.startTime | date('h:i a') }}-{{ course.endTime | date('h:i a') }}
             </td>
-            <td class="col-md-6"><strong>Attending:</strong> {{ course.attending }}/{{ course.capacity }}</td>
+            <td>
+                <strong>Attending:</strong> {{ course.attending }} out of {{ course.capacity }}<br>
+                {{ course.capacity - course.attending }} spots remaining.
+            </td>
         </tr>
         <tr>
             <td><strong>Campus:</strong> {{ course.campus }}</td>

@@ -6,3 +6,8 @@ services:
         class: Devblock\CourseGrabBundle\EventListener\JSONRequestListener
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+    devblock.coursegrabbundle.course_capacity_changed:
+        class: Devblock\CourseGrabBundle\EventListener\CourseListener
+        arguments: [ @doctrine.orm.entity_manager, @mailer, @templating ]
+        tags:
+            - { name: kernel.event_listener, event: course.capacity.changed, method: onCapacityChanged }

@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  * notifyUser
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Devblock\CourseGrabBundle\Entity\Repository\NotifyUserRepository")
+ * @ORM\Entity(repositoryClass="Devblock\CourseGrabBundle\Entity\Repository\notifyUserRepository")
  */
-class NotifyUser
+class notifyUser
 {
     /**
      * @var integer
@@ -38,11 +38,7 @@ class NotifyUser
     /**
      * @var string
      *
-     * @ORM\ManyToMany(targetEntity="Course")
-     * @ORM\JoinTable(name="notifications",
-     *      joinColumns={@ORM\JoinColumn(name="notify_user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="course_id", referencedColumnName="id")}
-     *      )
+     * @ORM\ManyToOne(targetEntity="Course", cascade={"persist", "remove"})
      */
     private $courses;
 
@@ -105,7 +101,7 @@ class NotifyUser
     /**
      * Set courses
      *
-     * @param Course[] $courses
+     * @param string $courses
      * @return notifyUser
      */
     public function setCourses($courses)
@@ -118,7 +114,7 @@ class NotifyUser
     /**
      * Get courses
      *
-     * @return Course[] 
+     * @return string 
      */
     public function getCourses()
     {

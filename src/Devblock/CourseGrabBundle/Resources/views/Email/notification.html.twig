@@ -9,17 +9,21 @@
 {% block content %}
 <table>
     <tr>
-        <td><h1>Welcome to CourseGrab</h1></td>
+        <td><h1>Course Notification from CourseGrab</h1></td>
     </tr>
     <tr>
-        <td>You have signed up to be notified when these courses have an opening.</td>
+        <td>
+            This course has recently had a seat open. However, 
+            we can't guarantee how long it will remain open, so hurry 
+            and get your spot!
+        </td>
     </tr>
     <tr>
-        {% include 'DevblockCourseGrabBundle:Email:courses.html' %}
+        {% include 'DevblockCourseGrabBundle:Email:courses.html.twig' %}
     </tr>
     <tr>
         Thank you<br>
     - CourseGrab Team
     </tr>
 </table>
-{% endblock %}{# empty Twig template #}
+{% endblock %}
