@@ -11,7 +11,7 @@ courseGrab.controller('courseController', ['$scope', '$window', '$routeParams',
         
         $scope.pagination = {
             page:  parseInt($routeParams.page) || 1,
-            limit: 20,
+            limit: 21,
             links: []
         };
         

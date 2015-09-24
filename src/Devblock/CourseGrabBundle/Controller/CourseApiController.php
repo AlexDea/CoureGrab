@@ -51,7 +51,7 @@ class CourseApiController extends Controller
     
     public function postCountPagesAction(Request $request) {
         $params = $this->getParamsFromRequest($request);
-        $limit = $request->request->get('limit', 20);
+        $limit = $request->request->get('limit', 21);
         
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('DevblockCourseGrabBundle:Course');

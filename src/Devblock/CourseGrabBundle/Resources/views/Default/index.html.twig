@@ -1,13 +1,27 @@
 {% extends 'DevblockCourseGrabBundle::base.html.twig' %}
 
 {% block body %}
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
+    <div class="inner-bg">
         <div class="container">
-            <h1>Course Grab</h1>
-            <p>This service allows you to have an advangtage over your fellow schoolmates by sending you a notification
-            the moment we find an opening with course you require.</p>
-            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2 text">
+                    <h1 class="wow fadeInLeftBig"><strong>Grab</strong> your <strong>Course</strong> Today</h1>
+                    <div class="description wow fadeInLeftBig">
+                        <p>
+                            <p>
+                                This service allows you to have an advangtage over your fellow schoolmates by sending you a notification
+                                the moment we find an opening with course you require.
+                            </p>
+                        </p>
+                    </div>
+                    <div class="top-big-link wow fadeInUp">
+                        <a class="btn btn-link-2 scroll-link" href="#features">Learn more</a>
+                    </div>
+                    <div class="top-arrow wow fadeInDownBig">
+                        <span class="typcn typcn-arrow-down"></span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     {{ parent() }}

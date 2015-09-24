@@ -2,79 +2,81 @@
 
 <a id="top"></a>
 
-<div ng-include="settings.viewsPath +'cart.html'" ng-if="isShowCart"></div>
+<div ng-include="settings.viewsPath + 'cart.html'" ng-if="isShowCart"></div>
 
 <hr>
 
 <div class="row">
-    <div class="col-md-4 well" ng-repeat="course in courses| orderBy: 'school'">
-        <div class="row">
-            <div class="col-md-8">
-                <h4>{{ course.school }}</h4>   
+    <div class="col-md-4" ng-repeat="course in courses| orderBy: 'school'">
+        <div class="col-md-12 well">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4>{{ course.school}}</h4>   
+                </div>
+                <div class="col-md-4">
+                    <h3>
+                        {{ course.semester}} 
+                        {{ course.year | date: 'yyyy' }}
+                    </h3>
+                </div>
             </div>
-            <div class="col-md-4">
-                <h3>
-                    {{ course.semester }} 
-                    {{ course.year | date: 'yyyy' }}
-                </h3>
+            <div class="row">
+                <div class="col-md-12"><h3>{{ course.title}}</h3></div>
+            </div>   
+            <div class="row">
+                <div class="col-md-6"><strong>Course number:</strong> {{ course.courseNumber}}</div>
+                <div class="col-md-6">
+                    {{ course.subject}} 
+                    {{ course.subjectNumber}}
+                    {{ course.section}}
+                </div> 
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12"><h3>{{ course.title }}</h3></div>
-        </div>   
-        <div class="row">
-            <div class="col-md-6"><strong>Course number:</strong> {{ course.courseNumber }}</div>
-            <div class="col-md-6">
-                {{ course.subject }} 
-                {{ course.subjectNumber }}
-                {{ course.section }}
-            </div> 
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <strong>Time:</strong>
-                {{ course.startTime | date: 'h:mm a' }}-{{ course.endTime | date: 'h:mm a' }}
-                <br>
-                <strong>Days:</strong> {{ course.days }}
+            <div class="row">
+                <div class="col-md-6">
+                    <strong>Time:</strong>
+                    {{ course.startTime | date: 'h:mm a' }}-{{ course.endTime | date: 'h:mm a' }}
+                    <br>
+                    <strong>Days:</strong> {{ course.days}}
+                </div>
+                <div class="col-md-6"><strong>Attending:</strong> {{ course.attending}}/{{ course.capacity}}</div>
             </div>
-            <div class="col-md-6"><strong>Attending:</strong> {{ course.attending }}/{{ course.capacity }}</div>
-        </div>
-        <div class="row">
-            <div class="col-md-6"><strong>Campus:</strong> {{ course.campus }}</div>
-            <div class="col-md-6"><strong>Location:</strong> {{ course.location }}</div>
-        </div>
-        <div class="row">
-            <div class="col-md-6"><strong>Credits:</strong> {{ course.credits }}</div>
-            <div class="col-md-6"><strong>Instructor:</strong> {{ course.instructor }}</div>
-        </div>
-        <div>
-            <button ng-if="!isInCart(course)"
-                    class="btn btn-default" ng-click="addCourseToCart(course)">Add</button>
-            <button ng-if="isInCart(course)" 
-                    class="btn btn-warning" ng-click="removeCourseFromCart(course)">Remove</button>
+            <div class="row">
+                <div class="col-md-6"><strong>Campus:</strong> {{ course.campus}}</div>
+                <div class="col-md-6"><strong>Location:</strong> {{ course.location}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6"><strong>Credits:</strong> {{ course.credits}}</div>
+                <div class="col-md-6"><strong>Instructor:</strong> {{ course.instructor}}</div>
+            </div>
+            <div>
+                <button ng-if="!isInCart(course)"
+                        class="btn btn-default" ng-click="addCourseToCart(course)">Add</button>
+                <button ng-if="isInCart(course)" 
+                        class="btn btn-warning" ng-click="removeCourseFromCart(course)">Remove</button>
+            </div>
         </div>
     </div>
 </div>    
 
 <a class="btn btn-primary pull-right" ng-click="goToAnchor('top')">Back to Top</a>
 
-<p ng-show="pagination.pages">{{ pagination.page }} out of {{ pagination.pages }} pages</p>
+<p ng-show="pagination.pages">{{ pagination.page}} out of {{ pagination.pages}} pages</p>
 <nav ng-show="pagination.links">
     <ul class="pagination"
         ng-init="{prevDisable: pagination.page <= 1, 
                     nextDisable: pagination.page >= pagination.pages}">
         <li ng-class="{disabled: prevDisable}">
-            <a ng-click="!prevDisable || handleDisabledClick()" href="#/{{ (pagination.page - 1) }}" aria-label="Previous">
+            <a ng-click="!prevDisable || handleDisabledClick()" href="#/{{ (pagination.page - 1)}}" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
         <li ng-repeat="link in pagination.links track by $index"
             ng-init="{curDisable: pagination.page == link || link == '...'}"
             ng-class="{disabled: curDisable}">
-            <a ng-click="!curDisable || handleDisabledClick()" href="#/{{ link }}">{{ link }}</a>
+            <a ng-click="!curDisable || handleDisabledClick()" href="#/{{ link}}">{{ link}}</a>
         </li>
         <li ng-class="{disabled: nextDisable}">
-            <a ng-click="!nextDisable || handleDisabledClick()" href="#/{{ (pagination.page + 1) }}" aria-label="Next">
+            <a ng-click="!nextDisable || handleDisabledClick()" href="#/{{ (pagination.page + 1)}}" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>

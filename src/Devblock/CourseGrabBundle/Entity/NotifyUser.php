@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  * notifyUser
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Devblock\CourseGrabBundle\Entity\Repository\notifyUserRepository")
+ * @ORM\Entity(repositoryClass="Devblock\CourseGrabBundle\Entity\Repository\NotifyUserRepository")
  */
-class notifyUser
+class NotifyUser
 {
     /**
      * @var integer
