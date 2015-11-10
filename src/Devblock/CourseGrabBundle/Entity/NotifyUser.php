@@ -37,11 +37,8 @@ class NotifyUser
 
     /**
      * @var string
-     * @ORM\ManyToMany(targetEntity="Course")
-	 * @ORM\JoinTable(name="notification_association",
-	 *      joinColumns={@ORM\JoinColumn(name="notify_user_id", referencedColumnName="id")},
-	 *      inverseJoinColumns={@ORM\JoinColumn(name="course_id", referencedColumnName="id")}
-	 *      )
+     *
+     * @ORM\ManyToOne(targetEntity="Course", cascade={"persist", "remove"})
      */
     private $courses;
 
