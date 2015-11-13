@@ -15,6 +15,10 @@ courseGrab.config(['$routeProvider', function ($routeProvider) {
             templateUrl: path + 'views/faq.html',
             controller: function() { }
         })
+        .when('/donate', {
+            templateUrl: path + 'views/donate.html',
+            controller: function() { }
+        })
         .otherwise({redirectTo: '/search'});
 
     }])
@@ -32,6 +36,10 @@ courseGrab.config(['$routeProvider', function ($routeProvider) {
             window.onbeforeunload = function (event) {
                 $rootScope.$broadcast('savestate');
             };
+            //hack to fix the background to resize
+            setTimeOut(function() {
+               window.dispatchEvent(new Event('resize'));
+            }, 1500);
         });
 ;
 $(document).ready(function () {
