@@ -37,7 +37,7 @@ courseGrab.config(['$routeProvider', function ($routeProvider) {
                 $rootScope.$broadcast('savestate');
             };
             //hack to fix the background to resize
-            setTimeOut(function() {
+            setTimeout(function() {
                window.dispatchEvent(new Event('resize'));
             }, 1500);
         });
