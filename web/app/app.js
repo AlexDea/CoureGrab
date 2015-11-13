@@ -8,6 +8,10 @@ courseGrab.config(['$routeProvider', function ($routeProvider) {
             templateUrl: path + 'views/courses.html',
             controller: 'courseController'
         })
+        .when('/faq', {
+            templateUrl: path + 'views/faq.html',
+            controller: function() { }
+        })
         .otherwise({redirectTo: '/search'});
 
     }])
