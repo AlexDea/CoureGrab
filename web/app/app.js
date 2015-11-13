@@ -7,6 +7,9 @@ courseGrab.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/search/:page?', {
             templateUrl: path + 'views/courses.html',
             controller: 'courseController'
+        }).when('/faq', {
+            templateUrl: path + 'views/faq.html',
+            controller: function() {}
         })
         .when('/faq', {
             templateUrl: path + 'views/faq.html',

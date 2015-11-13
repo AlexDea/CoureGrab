@@ -1,11 +1,11 @@
 devblock_course_grab_homepage:
     path:     /
     defaults: { _controller: DevblockCourseGrabBundle:Default:index }
-    
+
 devblock_course_grab_test:
     path:     /test
     defaults: { _controller: DevblockCourseGrabBundle:Test:index }
-    
+
 devblock_course_grab_test_email:
     path:     /test/email
     defaults: { _controller: DevblockCourseGrabBundle:NotifyApi:postNotify }
@@ -16,7 +16,7 @@ devblock_course_grab_api_post_course:
     methods: POST
     requirements:
         _format: json
-         
+
 devblock_course_grab_api_post_filters:
     path: /api/post/filters
     defaults: { _controller: DevblockCourseGrabBundle:CourseApi:postFilters }
